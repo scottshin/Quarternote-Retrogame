@@ -23,6 +23,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
+        android:icon="@drawable/ic_launcher"
         android:label="aFBA"
         android:theme="@style/aFBATheme"
         android:allowBackup="true">
