@@ -28,6 +28,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.ViewConfiguration;
 import android.widget.Toast;
 
+/**
+ *
+ */
 public class romListActivity extends ActionBarActivity implements romListFragment.Callbacks
 {
 	public UtilityMessage message;
@@ -78,16 +81,17 @@ public class romListActivity extends ActionBarActivity implements romListFragmen
         
     	compatList = new CompatibilityList( romsList );
     	EmuPreferences.DATA_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + dataName;
-    	EmuPreferences.ROM_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
-
+    	EmuPreferences._ROM_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
 
 		EmuPreferences.ROMINFO_PATH = EmuPreferences.DATA_PATH + "/rominfo";
     	EmuPreferences.TITLES_PATH = EmuPreferences.DATA_PATH + "/titles";
     	EmuPreferences.PREVIEWS_PATH = EmuPreferences.DATA_PATH + "/previews";
     	EmuPreferences.ICONS_PATH = EmuPreferences.DATA_PATH + "/icons";
     	EmuPreferences.STATE_PATH = EmuPreferences.DATA_PATH + "/states";
+
+
     	new File( EmuPreferences.ROMINFO_PATH ).mkdirs();
-    	new File( EmuPreferences.ROM_PATH ).mkdirs();
+    	new File( EmuPreferences._ROM_PATH ).mkdirs();
     	new File( EmuPreferences.ROMINFO_PATH ).mkdirs();
     	new File( EmuPreferences.TITLES_PATH ).mkdirs();
     	new File( EmuPreferences.PREVIEWS_PATH ).mkdirs();
@@ -110,8 +114,12 @@ public class romListActivity extends ActionBarActivity implements romListFragmen
     boolean doubleBackToExitPressedOnce = false;
     
     @Override
-    public void onBackPressed() 
-    {
+    public void onBackPressed() {
+
+
+
+
+
     	if(quit) {
     		return;
     	}
@@ -119,7 +127,6 @@ public class romListActivity extends ActionBarActivity implements romListFragmen
     		exit();
             return;
         }
-
         this.doubleBackToExitPressedOnce = true;
         
         if( !toastShowed ) {
@@ -190,8 +197,7 @@ public class romListActivity extends ActionBarActivity implements romListFragmen
     	
         if( mTwoPane ) 
         {
-        	if( id == null )
-        	{
+        	if( id == null )  {
         		this.fragmentDelete();
         		return;
         	}

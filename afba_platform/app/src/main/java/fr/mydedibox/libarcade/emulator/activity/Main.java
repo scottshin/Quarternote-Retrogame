@@ -666,8 +666,12 @@ public class Main extends ActionBarListActivity implements OnKeyListener
 	    			return true;
 	    	
 	    	case KeyEvent.KEYCODE_BACK:
-	    		return handlePauseMenu();
-	    		
+	    		//return handlePauseMenu();
+
+				 dialogConfirmExit();
+				return true;
+
+
 	    	case KeyEvent.KEYCODE_MENU:
 	    		if( actionBar.isShowing() )
 	    			return super.onKeyDown( keyCode, event );

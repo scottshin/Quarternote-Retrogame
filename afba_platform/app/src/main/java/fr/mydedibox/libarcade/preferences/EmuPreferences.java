@@ -13,7 +13,9 @@ public class EmuPreferences
 {
 	public static String DATA_URL = "";
 	public static String DATA_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/EmuFrontend";
-	public static String ROM_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
+
+	public static String _ROM_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
+
 	public static String ROMINFO_PATH = DATA_PATH + "/rominfo";
 	public static String TITLES_PATH = DATA_PATH + "/titles";
 	public static String PREVIEWS_PATH = DATA_PATH + "/previews";
@@ -98,27 +100,28 @@ public class EmuPreferences
 		this.mEditor.commit();
 	}
 	
-	public String getRomsPath()
+	public String getRomsPath_()
 	{
-		File rompath = new File( this.mPrefs.getString( "rompath", ROM_PATH ) );
+		File rompath = new File( this.mPrefs.getString( "rompath", _ROM_PATH ) );
 		if( !rompath.exists() )
 		{
 			if( !rompath.mkdirs() )
 			{
-				Utility.log( "Could not create rom path, reseting to: " + ROM_PATH );
+				Utility.log( "Could not create rom path, reseting to: " + _ROM_PATH );
 				this.mEditor.putString( "rompath", "/" );
 				this.mEditor.commit();
-				return ROM_PATH;
+				return _ROM_PATH;
 			}
 			this.mEditor.putString( "rompath", rompath.getAbsolutePath() );
 			this.mEditor.commit();
 		}
+
 		return rompath.getAbsolutePath();
 	}
 	
 	public String getCachePath()
 	{
-		return getRomsPath() + "/cache";
+		return getRomsPath_() + "/cache";
 	}
 	
 	/*

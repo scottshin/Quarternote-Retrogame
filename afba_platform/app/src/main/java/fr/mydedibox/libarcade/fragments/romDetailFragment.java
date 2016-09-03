@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -64,7 +65,9 @@ public class romDetailFragment extends Fragment
         	rom = (RomInfo) file.getCustomData();
         }
     }
-    
+
+
+
     @Override
     public void onConfigurationChanged( Configuration newConfig ) 
     {
@@ -85,11 +88,11 @@ public class romDetailFragment extends Fragment
         if( menu.findItem( R.id.menu_compatList ) != null )
         	menu.findItem( R.id.menu_compatList ).setTitle( ( compatListIsShown ? "romList" : "compatList") );
         
-        //if( menu.findItem( R.id.menu_back ) != null )
-        //	menu.findItem( R.id.menu_back ).setVisible( !compatListIsShown );
+ //       if( menu.findItem( R.id.menu_back ) != null )
+//        	menu.findItem( R.id.menu_back ).setVisible( !compatListIsShown );
         
-        if( menu.findItem( R.id.menu_play ) != null )
-        	menu.findItem( R.id.menu_play ).setVisible( !compatListIsShown );
+        if( menu.findItem( R.id.menu_play_sdl ) != null )
+        	menu.findItem( R.id.menu_play_sdl ).setVisible( !compatListIsShown );
         
         if( menu.findItem( R.id.menu_browser ) != null )
         	menu.findItem( R.id.menu_browser ).setVisible( compatListIsShown );
@@ -108,10 +111,10 @@ public class romDetailFragment extends Fragment
         		this.startActivity( Intent.createChooser( new Intent(Intent.ACTION_VIEW, Uri.parse( rom.GetGoogleLink() ) ), "Choose a browser") );
         		return true;
         	}
-        	else if ( id == R.id.menu_play )
+        	else if ( id == R.id.menu_play_sdl )
 	        {
 	        	prefs.setRomsPath( file.getParent() );
-	        	
+
 	        	Bundle bundle = new Bundle();
 	        	bundle.putInt( "screenW", rom.GetScreenResolution().GetWidth() );
 	        	bundle.putInt( "screenH", rom.GetScreenResolution().GetHeight() );
@@ -121,8 +124,8 @@ public class romDetailFragment extends Fragment
 	        	bundle.putString( "rom", rom.GetName() );
 	        	bundle.putInt( "buttons", rom.GetButtonCount() );
 	        	bundle.putBoolean( "vertical", rom.GetScreenResolution().isVertical() );
-	        	
-	        	final Intent itent = new Intent( activity, Main.class );                
+
+	        	final Intent itent = new Intent( activity, Main.class );
 	        	//itent.setComponent( new ComponentName( UtilityPackage.AFBA_PACKAGE, UtilityPackage.AFBA_ACTIVITY ) );
 	        	itent.putExtras(bundle);
 	        	startActivity( itent );
@@ -190,6 +193,40 @@ public class romDetailFragment extends Fragment
             });
             updateRomDescriptionHandler.start();
         }
+
+
+        rootView.findViewById(R.id.menu_play_sdl).setOnClickListener( new View.OnClickListener() {
+
+
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.menu_play_sdl:
+
+
+                        prefs.setRomsPath(file.getParent());
+
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("screenW", rom.GetScreenResolution().GetWidth());
+                        bundle.putInt("screenH", rom.GetScreenResolution().GetHeight());
+                        bundle.putString("data", EmuPreferences.DATA_PATH);
+                        bundle.putString("states", EmuPreferences.STATE_PATH);
+                        bundle.putString("roms", file.getParent());
+                        bundle.putString("rom", rom.GetName());
+                        bundle.putInt("buttons", rom.GetButtonCount());
+                        bundle.putBoolean("vertical", rom.GetScreenResolution().isVertical());
+
+                        final Intent itent = new Intent(activity, Main.class);
+                        //itent.setComponent( new ComponentName( UtilityPackage.AFBA_PACKAGE, UtilityPackage.AFBA_ACTIVITY ) );
+                        itent.putExtras(bundle);
+                        startActivity(itent);
+
+                        break;
+                }
+            }
+        });
+
+
         return rootView;
     }
     

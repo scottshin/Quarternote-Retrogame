@@ -47,6 +47,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+/**
+ *
+ */
 public class romListFragment extends ListFragment implements SearchView.OnQueryTextListener
 {
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
@@ -156,7 +159,7 @@ public class romListFragment extends ListFragment implements SearchView.OnQueryT
         listView = getListView();
         listView.setFastScrollEnabled( true );
         
-        GetDir( prefs.getRomsPath() );
+        GetDir( prefs.getRomsPath_() );
     }
     
     @Override
@@ -197,7 +200,7 @@ public class romListFragment extends ListFragment implements SearchView.OnQueryT
         {
             setActivatedPosition(savedInstanceState.getInt(STATE_ACTIVATED_POSITION));
         }
-        actionBar.setTitle( prefs.getRomsPath() );
+        actionBar.setTitle( prefs.getRomsPath_() );
     }
     
     @Override
