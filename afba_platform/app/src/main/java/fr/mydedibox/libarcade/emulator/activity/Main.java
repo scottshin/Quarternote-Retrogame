@@ -15,13 +15,13 @@ import fr.mydedibox.libarcade.emulator.effects.Effect;
 import fr.mydedibox.libarcade.emulator.effects.EffectList;
 import fr.mydedibox.libarcade.emulator.input.HardwareInput;
 import fr.mydedibox.libarcade.emulator.input.IButtons;
-import fr.mydedibox.libarcade.emulator.input.SoftwareInputView;
 import fr.mydedibox.libarcade.emulator.sdl.SDLAudio;
 import fr.mydedibox.libarcade.emulator.sdl.SDLJni;
 import fr.mydedibox.libarcade.emulator.sdl.SDLSurface;
 import fr.mydedibox.libarcade.emulator.utility.EmuPreferences;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.*;
 import android.content.res.Configuration;
@@ -45,7 +45,7 @@ import android.os.*;
 /**
     SDL Activity
 */
-public class Main extends ActionBarListActivity implements OnKeyListener
+public class Main extends Activity implements OnKeyListener
 {
     public static Main activity;
     
@@ -56,7 +56,7 @@ public class Main extends ActionBarListActivity implements OnKeyListener
     public EffectList mEffectList;
 
     private RelativeLayout mainView;
-    private SoftwareInputView inputView;
+//    private SoftwareInputView inputView;
     private HardwareInput inputHardware;
     public static SDLSurface surfaceView;
 
@@ -73,7 +73,7 @@ public class Main extends ActionBarListActivity implements OnKeyListener
 	private int inputHardwareButtonNow = 0;
 	private boolean inputHardwareEdit = false;
 	
-	private ActionBar actionBar;
+//	private ActionBar actionBar;
 	private Menu menu;
 	public ListView stateMenu; //"@+id/android:list"
 	public StateAdapter statesAdapter;
@@ -155,8 +155,8 @@ public class Main extends ActionBarListActivity implements OnKeyListener
         LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mainView = (RelativeLayout)layoutInflater.inflate( R.layout.emulator, null );
 	
-        inputView = new SoftwareInputView( display, getPackageName(), mainView, buttonCount, mPrefs.useVibration(), false );
-		mainView.addView( inputView );
+//       inputView = new SoftwareInputView( display, getPackageName(), mainView, buttonCount, mPrefs.useVibration(), false );
+//		mainView.addView( inputView );
         
 		effectView = new Effect( this );
        	mainView.addView( effectView );
@@ -170,14 +170,14 @@ public class Main extends ActionBarListActivity implements OnKeyListener
        	stateMenu = (ListView)this.findViewById( android.R.id.list );
 		stateMenu.setOnItemClickListener( statesListener );
 		stateMenu.setVisibility( View.GONE );
-        statesAdapter = new StateAdapter( activity, R.layout.statelist );
-        activity.setListAdapter( this.statesAdapter );
+  //      statesAdapter = new StateAdapter( activity, R.layout.statelist );
+  //      activity.setListAdapter( this.statesAdapter );
 
 		applyRatioAndEffect();  
-		actionBar = this.getSupportActionBar();
-		actionBar.setDefaultDisplayHomeAsUpEnabled(true);
+	//	actionBar = this.getSupportActionBar();
+//		actionBar.setDefaultDisplayHomeAsUpEnabled(true);
 		this.hideNavBar();
-		
+/*
 		if( !mPrefs.useSwInput() )
 			inputView.setVisibility( View.GONE );
 		else
@@ -185,7 +185,7 @@ public class Main extends ActionBarListActivity implements OnKeyListener
 			inputView.requestFocus();
 			inputView.bringToFront();
 		}
-		
+*/
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) 
 		{
 			uiChangeListener();
@@ -279,12 +279,12 @@ public class Main extends ActionBarListActivity implements OnKeyListener
     				| View.SYSTEM_UI_FLAG_FULLSCREEN
     				| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     	}
-    	actionBar.hide();
+    //	actionBar.hide();
     }
     
     public void showNavBar()
     {
-    	actionBar.show();
+  //  	actionBar.show();
     }
     
     public void updateFskip( int fskip )
@@ -349,63 +349,53 @@ public class Main extends ActionBarListActivity implements OnKeyListener
 				return true;
 
 			case R.id.menu_input_edit :
-			AlertDialog alertDialog = new AlertDialog.Builder(Main.this).create();
-			alertDialog.setTitle( "Choose" );
-			alertDialog.setMessage("You can either edit the default configuration for all games with "+buttonCount+" buttons or for this game ("+SDLJni.rom+")" );
-			alertDialog.setButton( AlertDialog.BUTTON_NEGATIVE, "Default "+buttonCount+" buttons", new DialogInterface.OnClickListener() 
+/*
+				AlertDialog alertDialog = new AlertDialog.Builder(Main.this).create();
+				alertDialog.setTitle( "Choose" );
+				alertDialog.setMessage("You can either edit the default configuration for all games with "+buttonCount+" buttons or for this game ("+SDLJni.rom+")" );
+				alertDialog.setButton( AlertDialog.BUTTON_NEGATIVE, "Default "+buttonCount+" buttons", new DialogInterface.OnClickListener()
 			{
 			      public void onClick( DialogInterface dialog, int which ) 
 			      {
-			    	  startSupportActionMode( new InputEditActionMode( buttonCount ) );
-			      }
+				    	  startSupportActionMode( new InputEditActionMode( buttonCount ) );
+				      }
 			});
-			alertDialog.setButton( AlertDialog.BUTTON_POSITIVE, "This game: "+SDLJni.rom, new DialogInterface.OnClickListener() 
+				alertDialog.setButton( AlertDialog.BUTTON_POSITIVE, "This game: "+SDLJni.rom, new DialogInterface.OnClickListener()
 			{
 			      public void onClick(DialogInterface dialog, int which) 
 			      {
 			    	  startSupportActionMode( new InputEditActionMode( -1 ) );
-			      }
+				      }
 			});
-			alertDialog.show();
-			return true;
+				alertDialog.show();
+*/
+				return true;
 
-			case R.id.menu_input_vibrate :
-			boolean vibrate = !mPrefs.useVibration();
-			mPrefs.useVibration( vibrate );
-			inputView.setVibration( vibrate );
-			item.setChecked( vibrate );
-			return true;
 
-			case R.id.menu_input_usesw  : {
-				boolean useSw = !mPrefs.useSwInput();
-				mPrefs.useSwInput(useSw);
-				inputView.setVisibility(useSw ? View.VISIBLE : View.GONE);
-				item.setChecked(useSw);
-			}
-			return true;
+
 			case R.id.menu_input_sethw :
-			showInputHardwareDialog();
-			return true;
+				showInputHardwareDialog();
+				return true;
 
 			case R.id.menu_switchs_service :
-			handlePauseMenu();
-			pad_data = 0;
-			pad_data |= IButtons.VALUE_TEST;
-			Main.setPadData( 0, pad_data );
-			return true;
+				handlePauseMenu();
+				pad_data = 0;
+				pad_data |= IButtons.VALUE_TEST;
+				Main.setPadData( 0, pad_data );
+				return true;
 
 			case R.id.menu_switchs_reset :
-			handlePauseMenu();
-			pad_data = 0;
-			pad_data |= IButtons.VALUE_RESET;
-			Main.setPadData( 0, pad_data );
-			return true;
+				handlePauseMenu();
+				pad_data = 0;
+				pad_data |= IButtons.VALUE_RESET;
+				Main.setPadData( 0, pad_data );
+				return true;
 			case R.id.menu_quit :
-			dialogConfirmExit();
-			return true;
+				dialogConfirmExit();
+				return true;
 
 			default :
-			return super.onOptionsItemSelected(item);
+				return super.onOptionsItemSelected(item);
 		}
     }
     
@@ -499,7 +489,7 @@ public class Main extends ActionBarListActivity implements OnKeyListener
 		p.addRule( orientation == Configuration.ORIENTATION_PORTRAIT ? RelativeLayout.ALIGN_PARENT_TOP : RelativeLayout.CENTER_VERTICAL );
 		surfaceView.setLayoutParams( p );
 		effectView.applyEffect( p, mEffectList.getByName( mPrefs.getEffectFast() ) );
-		inputView.requestLayout();
+//		inputView.requestLayout();
     }
     
     public void dialogConfirmExit( )
@@ -526,8 +516,10 @@ public class Main extends ActionBarListActivity implements OnKeyListener
             }
         });
 	}
-    
-    private final class InputEditActionMode implements ActionMode.Callback 
+
+
+
+	private final class InputEditActionMode implements ActionMode.Callback
     {
     	boolean canceled = false;
     	int buttons = -1;
@@ -540,12 +532,14 @@ public class Main extends ActionBarListActivity implements OnKeyListener
         @Override
         public boolean onCreateActionMode( ActionMode mode, Menu menu ) 
         {
+/*
         	actionBarHeight = actionBar.getHeight();
             Utility.loge( "actionBarHeight: "+actionBarHeight );
             hideNavBar();
         	mMessage.showToastMessageLong( "Touch buttons to move them..." );
-        	inputView.setEditMode(true);
+//        	inputView.setEditMode(true);
         	Main.this.getMenuInflater().inflate( R.menu.menu_edit_input, menu );
+*/
             return true;
         }
 
@@ -559,68 +553,18 @@ public class Main extends ActionBarListActivity implements OnKeyListener
         public boolean onActionItemClicked( ActionMode mode, MenuItem item ) 
         {
         	Utility.log( "onActionItemClicked: " + item.getTitle() + " ("+item.getItemId()+")");
-        	
-        	float stick_scale = inputView.getStickScale();
-        	int stick_alpha = inputView.getStickAlpha();
-        	float buttons_scale = inputView.getButtonsScale();
-        	
-        	int id = item.getItemId();
-            //switch ( item.getItemId() )
-            {
-            	if( id == R.id.menu_edit_scale_sminus )
-            	{
-            		stick_scale-=0.1f;
-            		inputView.setStickScale( stick_scale );
-            		return true;
-            	}
-            	else if( id == R.id.menu_edit_scale_splus )
-            	{
-            		stick_scale+=0.1f;
-            		inputView.setStickScale( stick_scale );
-            		return true;
-            	}
-            	else if( id == R.id.menu_edit_scale_bminus )
-            	{
-            		buttons_scale-=0.1f;
-            		inputView.setButtonsScale( buttons_scale );
-            		return true;
-            	}	
-            	else if( id == R.id.menu_edit_scale_bplus )
-            	{
-            		buttons_scale+=0.1f;
-            		inputView.setButtonsScale( buttons_scale );
-            		return true;
-            	}
-            	else if( id == R.id.menu_edit_alpha_minus )
-            	{
-            		stick_alpha-=10;
-            		inputView.setAlpha( stick_alpha );
-            		return true;
-            	}
-            	else if( id == R.id.menu_edit_alpha_plus )
-            	{
-            		stick_alpha+=10;
-            		inputView.setAlpha( stick_alpha );
-            		return true;
-            	}
-            	else if( id == R.id.menu_edit_cancel )
-            	{
-            		canceled = true;
-            		mode.finish();
-            		return true;
-            	}
+
             	return false;
-            }
         }
 
         @Override
         public void onDestroyActionMode( ActionMode mode ) 
         {
         	Utility.log( "onDestroyActionMode" );
-        	inputView.setEditMode( false );
+   //     	inputView.setEditMode( false );
         	showNavBar();
-        	if( !canceled )
-        		inputView.save( buttons );
+    //    	if( !canceled )
+     //   		inputView.save( buttons );
         }
     }
   
@@ -630,19 +574,46 @@ public class Main extends ActionBarListActivity implements OnKeyListener
     {
     	SDLJni.setPadData(i, data);
     }
-    
-    @Override
+
+	@Override
+	public boolean onKeyLongPress( int keyCode, KeyEvent event)
+	{
+
+		if ( keyCode == KeyEvent.KEYCODE_BACK )
+		{
+				dialogConfirmExit();
+				return true;
+		}
+		return super.onKeyLongPress( keyCode, event );
+
+	}
+
+
+	static int menu_pressed = 0;
+
+	@Override
 	public boolean onKey(View v, int keyCode, KeyEvent event)
     {
     	if( this.inputHardwareEdit )
 			return true;
+
+		if ( keyCode == 197) {
+
+			if (menu_pressed > 6)
+			{
+				dialogConfirmExit();
+				menu_pressed = 0;
+				return true;
+			}
+			menu_pressed++;
+		}
     	
-    	if( !inputView.isShown() && !actionBar.isShowing() )
-    		return inputHardware.onKey( v, keyCode, event );
-    	
-		return false;
+///    	if( !inputView.isShown() && !actionBar.isShowing() )
+    	return inputHardware.onKey( v, keyCode, event );
+//		return false;
 	}
-    
+
+/*
     @Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) 
 	{
@@ -656,34 +627,42 @@ public class Main extends ActionBarListActivity implements OnKeyListener
 	    	
 	    	case KeyEvent.KEYCODE_BACK:
 	    		//return handlePauseMenu();
-
-				 dialogConfirmExit();
+//				 dialogConfirmExit();
 				return true;
 
-
-	    	case KeyEvent.KEYCODE_MENU:
-	    		if( actionBar.isShowing() )
-	    			return super.onKeyDown( keyCode, event );
-	    		else 
-	    			return handlePauseMenu();
+//	    	case KeyEvent.KEYCODE_MENU:
+//	    		if( actionBar.isShowing() )
+//	    			return super.onKeyDown( keyCode, event );
+//	    		else
+//	    			return handlePauseMenu();
 	    }
 		return super.onKeyDown( keyCode, event );
 	}
- 
+*/
+/*
+	@Override
+	public boolean onKeyUp( int keyCode, KeyEvent event )
+	{
+		if ( menu_pressed > 0 )
+			menu_pressed = 0 ;
+
+		return super.onKeyUp( keyCode, event );
+	}
+*/
     public boolean handlePauseMenu()
     {
-    	Utility.log( "### actionBar.isShowing: " + actionBar.isShowing() );
-    	if( actionBar.isShowing() )
-    	{
-    		stateMenu.setVisibility( View.GONE );
-    		hideNavBar();
-    		resume();
-    	}
-    	else
-    	{
-    		showNavBar();
-    		pause();
-    	}
+//    	Utility.log( "### actionBar.isShowing: " + actionBar.isShowing() );
+//    	if( actionBar.isShowing() )
+ //   	{
+  //  		stateMenu.setVisibility( View.GONE );
+   // 		hideNavBar();
+    //		resume();
+    //	}
+    //	else
+    //	{
+    //		showNavBar();
+    //		pause();
+    //	}
     	return true;
     }
   

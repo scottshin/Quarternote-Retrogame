@@ -162,7 +162,7 @@ public class HardwareInput implements IButtons
 		Main.setPadData( 0, pad_data );
 		return handled;
 	}
-	
+
 	public static List<String> ButtonKeys = Arrays.asList(
 		"pad_up",
 		"pad_down",

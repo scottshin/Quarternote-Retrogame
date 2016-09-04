@@ -13,7 +13,7 @@
           android:title="Effects"
           afba:showAsAction="ifRoom" 
 	/>
-	
+
 	<item android:id="@+id/menu_frameskip" android:title="Frameskip">
 		<menu>
 			<item android:id="@+id/menu_fskip_0" android:title="0" android:checkable="true"/>
@@ -41,22 +41,17 @@
 			<item android:id="@+id/menu_input_sethw" android:title="Set hardware inputs"/>
 		</menu>
 	</item>
-	
+
 	<item android:id="@+id/menu_switchs"
           android:icon="@drawable/dip"
-          android:title="Switchs"
-          afba:showAsAction="ifRoom" 
-	>
+          android:title="Switchs">
 		<menu>
 			<item android:id="@+id/menu_switchs_service" android:title="Service"/>
 			<item android:id="@+id/menu_switchs_reset" android:title="Reset"/>
 		</menu>
 	</item>
-
 	<item android:id="@+id/menu_quit"
           android:icon="@drawable/quitblack"
-          android:title="Quit"
-          afba:showAsAction="ifRoom" 
-	/>
+          android:title="Quit" />
 
 </menu>
