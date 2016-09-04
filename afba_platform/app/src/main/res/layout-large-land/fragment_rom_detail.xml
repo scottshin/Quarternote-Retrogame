@@ -97,6 +97,14 @@
                     android1:text="parentrom" />
             </LinearLayout>
 
+            <Button
+                android:text="PLAY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/menu_play_sdl" />
+
+
+
             <ScrollView
                 android1:id="@+id/romDescription"
                 android1:layout_width="match_parent"

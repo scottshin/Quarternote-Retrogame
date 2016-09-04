@@ -308,64 +308,47 @@ public class Main extends ActionBarListActivity implements OnKeyListener
     public boolean onOptionsItemSelected(MenuItem item) 
     {
     	int pad_data = 0;
+		int fskip = 0;
     	
         int itemId = item.getItemId();
-		if (itemId == R.id.menu_scale) {
-			int newSize = mPrefs.getScreenSize();
-			newSize++;
-			if( newSize>=EffectList.ScreenSize.values().length ) {
-				newSize = 0;
-			}
-			mPrefs.setScreenSize( newSize );
-			applyRatioAndEffect();
-			return true;
-		} else if (itemId == R.id.menu_effects) {
-			selectEffect();
-			return true;
-		} else if (itemId == R.id.menu_fskip_0) {
-			mPrefs.setFrameSkip( 0 );
-			updateFskip( 0 );
-			return true;
-		} else if (itemId == R.id.menu_fskip_1) {
-			mPrefs.setFrameSkip( 1 );
-			updateFskip( 1 );
-			return true;
-		} else if (itemId == R.id.menu_fskip_2) {
-			mPrefs.setFrameSkip( 2 );
-			updateFskip( 2 );
-			return true;
-		} else if (itemId == R.id.menu_fskip_3) {
-			mPrefs.setFrameSkip( 3 );
-			updateFskip( 3 );
-			return true;
-		} else if (itemId == R.id.menu_fskip_4) {
-			mPrefs.setFrameSkip( 4 );
-			updateFskip( 4 );
-			return true;
-		} else if (itemId == R.id.menu_fskip_5) {
-			mPrefs.setFrameSkip( 5 );
-			updateFskip( 5 );
-			return true;
-		} else if (itemId == R.id.menu_fskip_6) {
-			mPrefs.setFrameSkip( 6 );
-			updateFskip( 6 );
-			return true;
-		} else if (itemId == R.id.menu_fskip_7) {
-			mPrefs.setFrameSkip( 7 );
-			updateFskip( 7 );
-			return true;
-		} else if (itemId == R.id.menu_fskip_8) {
-			mPrefs.setFrameSkip( 8 );
-			updateFskip( 8 );
-			return true;
-		} else if (itemId == R.id.menu_fskip_9) {
-			mPrefs.setFrameSkip( 9 );
-			updateFskip( 9 );
-			return true;
-		} else if (itemId == R.id.menu_states) {
-			updateStatesList();
-			return true;
-		} else if (itemId == R.id.menu_input_edit) {
+
+		switch ( itemId ) {
+			case R.id.menu_scale:
+				{
+				int newSize = mPrefs.getScreenSize();
+				newSize++;
+				if (newSize >= EffectList.ScreenSize.values().length) {
+					newSize = 0;
+				}
+				mPrefs.setScreenSize(newSize);
+				applyRatioAndEffect();
+				}
+				return true;
+
+			case R.id.menu_effects:
+				selectEffect();
+				return true;
+
+
+			case R.id.menu_fskip_9: fskip++;
+			case R.id.menu_fskip_8: fskip++;
+			case R.id.menu_fskip_7: fskip++;
+			case R.id.menu_fskip_6: fskip++;
+			case R.id.menu_fskip_5: fskip++;
+			case R.id.menu_fskip_4: fskip++;
+			case R.id.menu_fskip_3: fskip++;
+			case R.id.menu_fskip_2: fskip++;
+			case R.id.menu_fskip_1: fskip++;
+			case R.id.menu_fskip_0:
+				mPrefs.setFrameSkip( fskip );
+				updateFskip( fskip );
+				return true;
+
+			case R.id.menu_states:
+				updateStatesList();
+				return true;
+
+			case R.id.menu_input_edit :
 			AlertDialog alertDialog = new AlertDialog.Builder(Main.this).create();
 			alertDialog.setTitle( "Choose" );
 			alertDialog.setMessage("You can either edit the default configuration for all games with "+buttonCount+" buttons or for this game ("+SDLJni.rom+")" );
@@ -385,37 +368,43 @@ public class Main extends ActionBarListActivity implements OnKeyListener
 			});
 			alertDialog.show();
 			return true;
-		} else if (itemId == R.id.menu_input_vibrate) {
+
+			case R.id.menu_input_vibrate :
 			boolean vibrate = !mPrefs.useVibration();
 			mPrefs.useVibration( vibrate );
 			inputView.setVibration( vibrate );
 			item.setChecked( vibrate );
 			return true;
-		} else if (itemId == R.id.menu_input_usesw) {
-			boolean useSw = !mPrefs.useSwInput();
-			mPrefs.useSwInput( useSw );
-			inputView.setVisibility( useSw ? View.VISIBLE : View.GONE);
-			item.setChecked( useSw );
+
+			case R.id.menu_input_usesw  : {
+				boolean useSw = !mPrefs.useSwInput();
+				mPrefs.useSwInput(useSw);
+				inputView.setVisibility(useSw ? View.VISIBLE : View.GONE);
+				item.setChecked(useSw);
+			}
 			return true;
-		} else if (itemId == R.id.menu_input_sethw) {
+			case R.id.menu_input_sethw :
 			showInputHardwareDialog();
 			return true;
-		} else if (itemId == R.id.menu_switchs_service) {
+
+			case R.id.menu_switchs_service :
 			handlePauseMenu();
 			pad_data = 0;
 			pad_data |= IButtons.VALUE_TEST;
 			Main.setPadData( 0, pad_data );
 			return true;
-		} else if (itemId == R.id.menu_switchs_reset) {
+
+			case R.id.menu_switchs_reset :
 			handlePauseMenu();
 			pad_data = 0;
 			pad_data |= IButtons.VALUE_RESET;
 			Main.setPadData( 0, pad_data );
 			return true;
-		} else if (itemId == R.id.menu_quit) {
+			case R.id.menu_quit :
 			dialogConfirmExit();
 			return true;
-		} else {
+
+			default :
 			return super.onOptionsItemSelected(item);
 		}
     }
