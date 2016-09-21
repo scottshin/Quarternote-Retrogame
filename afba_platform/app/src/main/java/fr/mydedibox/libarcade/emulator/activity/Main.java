@@ -27,6 +27,7 @@ import android.content.*;
 import android.content.res.Configuration;
 import android.support.v7.app.ActionBar;
 import android.support.v7.view.ActionMode;
+import android.support.v7.widget.PopupMenu;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -371,8 +372,6 @@ public class Main extends Activity implements OnKeyListener
 */
 				return true;
 
-
-
 			case R.id.menu_input_sethw :
 				showInputHardwareDialog();
 				return true;
@@ -390,6 +389,7 @@ public class Main extends Activity implements OnKeyListener
 				pad_data |= IButtons.VALUE_RESET;
 				Main.setPadData( 0, pad_data );
 				return true;
+
 			case R.id.menu_quit :
 				dialogConfirmExit();
 				return true;
@@ -601,7 +601,12 @@ public class Main extends Activity implements OnKeyListener
 
 			if (menu_pressed > 6)
 			{
-				dialogConfirmExit();
+				//dialogConfirmExit();
+
+				PopupMenu popup = new PopupMenu(this, button );
+
+
+
 				menu_pressed = 0;
 				return true;
 			}
