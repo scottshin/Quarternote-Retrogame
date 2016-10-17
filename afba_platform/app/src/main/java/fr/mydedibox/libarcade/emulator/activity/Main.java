@@ -425,8 +425,12 @@ public class Main extends Activity implements OnKeyListener
 		final float height = display.getHeight();
 		final float ratio = ((float)mScreenEmuSizeX/(float)mScreenEmuSizeY);
 		Utility.log( "Display: " + (int)width+"x"+(int)height+ "(ratio:"+ratio+")" );
-		
-		switch ( EffectList.ScreenSize.values()[mPrefs.getScreenSize()] )
+
+
+		EffectList.ScreenSize val = EffectList.ScreenSize.values()[mPrefs.getScreenSize()];
+
+		val = EffectList.ScreenSize.EFFECT_FULLSCREEN;		// add_shin
+		switch ( val )
         {
         	case EFFECT_FITSCREEN:
         	{
@@ -603,7 +607,7 @@ public class Main extends Activity implements OnKeyListener
 			{
 				//dialogConfirmExit();
 
-				PopupMenu popup = new PopupMenu(this, button );
+				//PopupMenu popup = new PopupMenu(this, button );
 
 
 
@@ -627,14 +631,11 @@ public class Main extends Activity implements OnKeyListener
     	
 	    switch( keyCode )
 	    {
-	    	case KeyEvent.KEYCODE_SEARCH:
-	    			return true;
-	    	
+	    	case KeyEvent.KEYCODE_SEARCH:	    			return true;
 	    	case KeyEvent.KEYCODE_BACK:
 	    		//return handlePauseMenu();
 //				 dialogConfirmExit();
 				return true;
-
 //	    	case KeyEvent.KEYCODE_MENU:
 //	    		if( actionBar.isShowing() )
 //	    			return super.onKeyDown( keyCode, event );
@@ -650,7 +651,6 @@ public class Main extends Activity implements OnKeyListener
 	{
 		if ( menu_pressed > 0 )
 			menu_pressed = 0 ;
-
 		return super.onKeyUp( keyCode, event );
 	}
 */
