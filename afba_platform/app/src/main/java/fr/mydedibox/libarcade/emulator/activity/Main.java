@@ -595,24 +595,27 @@ public class Main extends Activity implements OnKeyListener
 
 	static int menu_pressed = 0;
 
+	final int JOYSTICK_BACK =4;
+
 	@Override
 	public boolean onKey(View v, int keyCode, KeyEvent event)
     {
     	if( this.inputHardwareEdit )
 			return true;
 
-		if ( keyCode == 197) {
+		if ( keyCode == 197 || keyCode == JOYSTICK_BACK ) {
 
 			if (menu_pressed > 6)
 			{
-				//dialogConfirmExit();
 
-				//PopupMenu popup = new PopupMenu(this, button );
 
 
 
 				menu_pressed = 0;
-				return true;
+
+				final EmuPreferences mPrefs = this.mPrefs;
+				keyCode = mPrefs.getPadMenu();
+				return inputHardware.onKey( v, keyCode, event );
 			}
 			menu_pressed++;
 		}
@@ -649,14 +652,14 @@ public class Main extends Activity implements OnKeyListener
 	@Override
 	public boolean onKeyUp( int keyCode, KeyEvent event )
 	{
-		if ( menu_pressed > 0 )
+		if ( menu_pressed > 0 /menu)
 			menu_pressed = 0 ;
 		return super.onKeyUp( keyCode, event );
 	}
 */
     public boolean handlePauseMenu()
     {
-//    	Utility.log( "### actionBar.isShowing: " + actionBar.isShowing() );
+ //   	Utility.log( "### actionBar.isShowing: " + actionBar.isShowing() );
 //    	if( actionBar.isShowing() )
  //   	{
   //  		stateMenu.setVisibility( View.GONE );
@@ -668,6 +671,9 @@ public class Main extends Activity implements OnKeyListener
     //		showNavBar();
     //		pause();
     //	}
+
+		dialogConfirmExit();
+		//PopupMenu popup = new PopupMenu(this, button );
     	return true;
     }
   

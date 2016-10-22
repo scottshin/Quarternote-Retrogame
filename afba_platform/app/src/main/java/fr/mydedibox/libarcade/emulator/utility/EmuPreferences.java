@@ -8,126 +8,115 @@ import com.greatlittleapps.utility.Utility;
 
 import fr.mydedibox.libarcade.emulator.effects.EffectList;
 
-public class EmuPreferences 
-{
+public class EmuPreferences {
 	public static String ROM_PATH = Environment.getExternalStorageDirectory().getAbsolutePath();
 	public static String DATA_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/EmuFrontend";
 
 	private SharedPreferences mPrefs;
 	private SharedPreferences.Editor mEditor;
-	
-	public EmuPreferences( Context pCtx ) 
-	{
+
+	public EmuPreferences(Context pCtx) {
 		this.mPrefs = PreferenceManager.getDefaultSharedPreferences(pCtx);
 		this.mEditor = this.mPrefs.edit();
 	}
-	
-	public SharedPreferences getSharedPreferences()
-	{
+
+	public SharedPreferences getSharedPreferences() {
 		return this.mPrefs;
 	}
-	
-	public boolean licenceRead()
-	{
-		return this.mPrefs.getBoolean( "licenceread", false );
+
+	public boolean licenceRead() {
+		return this.mPrefs.getBoolean("licenceread", false);
 	}
-	
-	public void setLicenceRead( boolean pValue )
-	{
-		this.mEditor.putBoolean( "licenceread", pValue );
+
+	public void setLicenceRead(boolean pValue) {
+		this.mEditor.putBoolean("licenceread", pValue);
 		this.mEditor.commit();
 	}
-	
+
 	/*
 	 * Effects
 	 */
-	public int getScreenSize()
-	{
-		return this.mPrefs.getInt( "screensize", 3 );
+	public int getScreenSize() {
+		return this.mPrefs.getInt("screensize", 3);
 	}
-	
-	public void setScreenSize(final int pScreenSize )
-	{
-		this.mEditor.putInt( "screensize", pScreenSize );
+
+	public void setScreenSize(final int pScreenSize) {
+		this.mEditor.putInt("screensize", pScreenSize);
 		this.mEditor.commit();
 	}
-	
-	public String getEffectFast()
-	{
-		return this.mPrefs.getString( "effectfast", EffectList.effect_scanlines25_name );
+
+	public String getEffectFast() {
+		return this.mPrefs.getString("effectfast", EffectList.effect_scanlines25_name);
 	}
-	
-	public void setEffectFast( String pEffectName )
-	{
-		this.mEditor.putString( "effectfast", pEffectName );
+
+	public void setEffectFast(String pEffectName) {
+		this.mEditor.putString("effectfast", pEffectName);
 		this.mEditor.commit();
 	}
-	
-	public void setFrameSkip( int fskip )
-	{
-		this.mEditor.putInt( "fskip", fskip );
+
+	public void setFrameSkip(int fskip) {
+		this.mEditor.putInt("fskip", fskip);
 		this.mEditor.commit();
 	}
-	
-	public int getFrameSkip( )
-	{
-		return this.mPrefs.getInt( "fskip", 0 );
+
+	public int getFrameSkip() {
+		return this.mPrefs.getInt("fskip", 0);
 	}
-	public boolean useVibration()
-	{
-		return this.mPrefs.getBoolean( "vibrate", true );
+
+	public boolean useVibration() {
+		return this.mPrefs.getBoolean("vibrate", true);
 	}
-	public void useVibration( boolean pValue )
-	{
-		this.mEditor.putBoolean( "vibrate", pValue );
+
+	public void useVibration(boolean pValue) {
+		this.mEditor.putBoolean("vibrate", pValue);
 		this.mEditor.commit();
 	}
-	
+
 	/*
 	 * Hardware controls
 	 */
-	public boolean useSwInput()
-	{
-		return this.mPrefs.getBoolean( "useswinput", true );
+	public boolean useSwInput() {
+		return this.mPrefs.getBoolean("useswinput", true);
 	}
-	public void useSwInput( boolean pValue )
-	{
-		this.mEditor.putBoolean( "useswinput", pValue );
+
+	public void useSwInput(boolean pValue) {
+		this.mEditor.putBoolean("useswinput", pValue);
 		this.mEditor.commit();
 	}
-	public int getPad( final String pKey )
-	{
-		return Utility.parseInt(this.mPrefs.getString( pKey, "0" ));
+
+	public int getPad(final String pKey) {
+		return Utility.parseInt(this.mPrefs.getString(pKey, "0"));
 	}
-	public void setPad( final String pKey, final int pValue )
-	{
-		this.mEditor.putString( pKey, ""+pValue );
+
+	public void setPad(final String pKey, final int pValue) {
+		this.mEditor.putString(pKey, "" + pValue);
 		this.mEditor.commit();
 	}
-	public int getPadUp()
-	{
-		return Utility.parseInt(this.mPrefs.getString( "pad_up", "19" ));
+
+	public int getPadUp() {
+		return Utility.parseInt(this.mPrefs.getString("pad_up", "19"));
 	}
-	public int getPadDown()
-	{
-		return Utility.parseInt(this.mPrefs.getString( "pad_down", "20" ));
+
+	public int getPadDown() {
+		return Utility.parseInt(this.mPrefs.getString("pad_down", "20"));
 	}
-	public int getPadLeft()
-	{
-		return Utility.parseInt(this.mPrefs.getString( "pad_left", "21" ));
+
+	public int getPadLeft() {
+		return Utility.parseInt(this.mPrefs.getString("pad_left", "21"));
 	}
-	public int getPadRight()
-	{
-		return Utility.parseInt(this.mPrefs.getString( "pad_right", "22" ));
+
+	public int getPadRight() {
+		return Utility.parseInt(this.mPrefs.getString("pad_right", "22"));
 	}
-	public int getPad1()
-	{
-		return Utility.parseInt(this.mPrefs.getString( "pad_1", "23" ));
-	}
-	public int getPad2()
-	{
-		return Utility.parseInt(this.mPrefs.getString( "pad_2", "4" ));
-	}
+
+
+	public int getPad1() {return Utility.parseInt(this.mPrefs.getString("pad_1", "96"));}
+//	public int getPad1() {return Utility.parseInt(this.mPrefs.getString("pad_1","23"));	}
+
+
+//	public int getPad2() {return Utility.parseInt(this.mPrefs.getString( "pad_2", "4" ));}
+	public int getPad2() {return Utility.parseInt(this.mPrefs.getString( "pad_2", "97"));}
+
 	public int getPad3()
 	{
 		return Utility.parseInt(this.mPrefs.getString( "pad_3", "99" ));
@@ -144,10 +133,14 @@ public class EmuPreferences
 	{
 		return Utility.parseInt(this.mPrefs.getString( "pad_6", "103" ));
 	}
-	public int getPadCoins()
+		public int getPadCoins()
 	{
-		return Utility.parseInt(this.mPrefs.getString( "pad_coins", "109" ));
+		return Utility.parseInt(this.mPrefs.getString( "pad_coins", "4" ));
 	}
+//	public int getPadCoins()
+//	{
+//		return Utility.parseInt(this.mPrefs.getString( "pad_coins", "109" ));
+//	}
 	public int getPadStart()
 	{
 		return Utility.parseInt(this.mPrefs.getString( "pad_start", "108" ));
