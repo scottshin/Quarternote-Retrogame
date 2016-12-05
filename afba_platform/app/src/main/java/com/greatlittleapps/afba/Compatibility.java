@@ -6436,6 +6436,19 @@ public class Compatibility
 		list.add( new RomInfo( "Zupapa!", "zupapa", null, null, "SNK", "Neo Geo MVS", "2001", 1, 4, 304, 224, 0 ) );
 		list.add( new RomInfo( "Zzyzzyxx (set 1)", "zzyzzyxx", null, null, "Cinematronics + Advanced Microcomputer Systems", "Jack the Giantkiller", "1982", 1, 1, 224, 256, 0 ) );
 		list.add( new RomInfo( "Zzyzzyxx (set 2)", "zzyzzyxx2", "zzyzzyxx", null, "Cinematronics + Advanced Microcomputer Systems", "Jack the Giantkiller", "1982", 1, 1, 224, 256, 0 ) );
+
+
+		list.add( new RomInfo( "5Cherry Master", "cmastere", "cmastere", null, "cmastere + Advanced Microcomputer Systems", "Jack the Giantkiller", "cmastere", 1, 1, 224, 256, 0 ) );
+		list.add( new RomInfo( "4Cherry Master", "cmfun", "cmfun", null, "cmastere + Advanced Microcomputer Systems", "Jack the Giantkiller", "cmfun", 1, 1, 224, 256, 0 ) );
+	list.add( new RomInfo( "3Cherry Master", "cmv4", "cmv4", null, "cmastere + Advanced Microcomputer Systems", "Jack the Giantkiller", "cmv4", 1, 1, 224, 256, 0 ) );
+	list.add( new RomInfo( "2Cherry Master", "cmwm", "cmwm", null, "cmastere + Advanced Microcomputer Systems", "Jack the Giantkiller", "cmwm", 1, 1, 224, 256, 0 ) );
+	}
+
+
+
+	public void AddListUser()
+	{
+		list.add( new RomInfo( "Yu Yu Hakusho Gaiden (Jpn)", "cmv8012", null, null, "Sega", "Sega Megadrive", "1994", 1, 6, 320, 223, 0 ) );
 	}
 
 	public Compatibility()
@@ -6453,5 +6466,8 @@ public class Compatibility
 		AddList10();
 		AddList11();
 		AddList12();
+
+
+		AddListUser();
 	}
 }

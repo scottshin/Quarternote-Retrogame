@@ -24,6 +24,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.*;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.support.v7.app.ActionBar;
 import android.support.v7.view.ActionMode;
@@ -33,6 +34,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.ViewConfiguration;
@@ -46,9 +48,9 @@ import android.os.*;
 /**
     SDL Activity
 */
-public class Main extends Activity implements OnKeyListener
+public class EmulMainActivity extends Activity implements OnKeyListener
 {
-    public static Main activity;
+    public static EmulMainActivity activity;
     
     private static UtilityMessage mMessage;
  
@@ -91,6 +93,10 @@ public class Main extends Activity implements OnKeyListener
 		
         super.onCreate( savedInstanceState );
 
+		//setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+		// 화면을 portrait(세로) 화면으로 고정하고 싶은 경우
+
+
         display = ((WindowManager) getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();
         
         // force overflow menu
@@ -132,7 +138,8 @@ public class Main extends Activity implements OnKeyListener
 			SDLJni.rompath = Environment.getExternalStorageDirectory().getPath()+"/aFBA/roms";
 			SDLJni.rom = "19xx";
         }
-       
+
+
         if( vertical )
         {
 	        int newWidth = mScreenHolderSizeY;
@@ -148,10 +155,10 @@ public class Main extends Activity implements OnKeyListener
  
         activity = this;
         
-        mPrefs = new EmuPreferences( Main.this );
-        mMessage = new UtilityMessage( Main.this );
+        mPrefs = new EmuPreferences( EmulMainActivity.this );
+        mMessage = new UtilityMessage( EmulMainActivity.this );
         mEffectList = new EffectList();
-        inputHardware = new HardwareInput( Main.this );
+        inputHardware = new HardwareInput( EmulMainActivity.this );
         
         LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		mainView = (RelativeLayout)layoutInflater.inflate( R.layout.emulator, null );
@@ -167,6 +174,10 @@ public class Main extends Activity implements OnKeyListener
         surfaceView = (SDLSurface)this.findViewById( R.id.SDLSurface );
         surfaceView.setKeepScreenOn( true );
         surfaceView.setOnKeyListener( this );
+
+
+//		surfaceView.setRotation(90);
+
 
        	stateMenu = (ListView)this.findViewById( android.R.id.list );
 		stateMenu.setOnItemClickListener( statesListener );
@@ -240,18 +251,76 @@ public class Main extends Activity implements OnKeyListener
 		}
 	};
 
-    @Override
-    public boolean onCreateOptionsMenu ( Menu pMenu )
-    {
-    	getMenuInflater().inflate( R.menu.menu, pMenu );
-    	menu = pMenu;
-    	menu.findItem( R.id.menu_input_usesw ).setChecked( mPrefs.useSwInput() );
-    	menu.findItem( R.id.menu_input_vibrate ).setChecked( mPrefs.useVibration() );
-    	updateFskip( mPrefs.getFrameSkip() );
-    	return super.onCreateOptionsMenu( menu );
-    }
 
-    @SuppressLint("NewApi")
+
+	final int ONE = 0;
+	final int TWO = 1;
+	final int THREE = 2;
+	final int FOUR = 3;
+	final int FIVE = 4;
+	final int SIX = 5;
+	final int SEVEN = 6;
+	final int EIGHT = 7;
+	final int NINE = 8;
+	final int TEN = 9;
+
+    @Override
+    public boolean onCreateOptionsMenu ( Menu menu )
+    {
+//    	getMenuInflater().inflate( R.menu.menu, menu );
+//    	menu.findItem( R.id.menu_input_usesw ).setChecked( mPrefs.useSwInput() );
+//    	menu.findItem( R.id.menu_input_vibrate ).setChecked( mPrefs.useVibration() );
+//    	updateFskip( mPrefs.getFrameSkip() );
+//    	return super.onCreateOptionsMenu( menu );
+
+
+
+
+		menu.add(0, ONE, Menu.NONE, "ONE").setIcon(android.R.drawable.ic_menu_rotate);
+		menu.add(0, TWO, Menu.NONE, "TWO").setIcon(android.R.drawable.ic_menu_add);
+		menu.add(0, THREE, Menu.NONE, "THREE").setIcon(android.R.drawable.ic_menu_agenda);
+		menu.add(0, FOUR, Menu.NONE, "FOUR");
+		menu.add(0, FIVE, Menu.NONE, "FIVE");
+
+		// Menu에 SubMenu 추가
+		SubMenu subMenu = menu.addSubMenu("글씨체 설정");
+
+		subMenu.add(1, SIX, Menu.NONE, "굴림체");
+		subMenu.add(1, SEVEN, Menu.NONE, "이탤릭체");
+		subMenu.add(1, EIGHT, Menu.NONE, "맑은고딕");
+		return true;
+    }
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+//	@Override
+//	public boolean onOptionsItemSelected(MenuItem item) {
+//
+//		switch (item.getItemId()) {
+//			case ONE:
+//				Toast.makeText(MainActivity.this, "ONE", Toast.LENGTH_SHORT).show();
+//				break;
+//
+//			case TWO:
+//				Toast.makeText(MainActivity.this, "TWO", Toast.LENGTH_SHORT).show();
+//				break;
+//
+//			case EIGHT:
+//				Toast.makeText(MainActivity.this, "EIGHT", Toast.LENGTH_SHORT).show();
+//				break;
+//
+//			default:
+//				break;
+//		}
+//
+//		return super.onOptionsItemSelected(item);
+//	}
+
+
+
+	@SuppressLint("NewApi")
 	public void uiChangeListener()
     {
         final View decorView = getWindow().getDecorView();
@@ -304,6 +373,25 @@ public class Main extends Activity implements OnKeyListener
     	
     	SDLJni.setfskip( fskip );
     }
+
+
+	private void doMenuScale()
+	{
+				int newSize = mPrefs.getScreenSize();
+				newSize++;
+				if (newSize >= EffectList.ScreenSize.values().length) {
+					newSize = 0;
+				}
+				mPrefs.setScreenSize(newSize);
+				applyRatioAndEffect();
+	}
+
+	private void doMenuSwitchService()
+	{
+
+
+	}
+
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) 
@@ -315,15 +403,7 @@ public class Main extends Activity implements OnKeyListener
 
 		switch ( itemId ) {
 			case R.id.menu_scale:
-				{
-				int newSize = mPrefs.getScreenSize();
-				newSize++;
-				if (newSize >= EffectList.ScreenSize.values().length) {
-					newSize = 0;
-				}
-				mPrefs.setScreenSize(newSize);
-				applyRatioAndEffect();
-				}
+				doMenuScale();
 				return true;
 
 			case R.id.menu_effects:
@@ -380,40 +460,37 @@ public class Main extends Activity implements OnKeyListener
 				handlePauseMenu();
 				pad_data = 0;
 				pad_data |= IButtons.VALUE_TEST;
-				Main.setPadData( 0, pad_data );
+				EmulMainActivity.setPadData( 0, pad_data );
 				return true;
 
 			case R.id.menu_switchs_reset :
 				handlePauseMenu();
 				pad_data = 0;
 				pad_data |= IButtons.VALUE_RESET;
-				Main.setPadData( 0, pad_data );
+				EmulMainActivity.setPadData( 0, pad_data );
 				return true;
 
-			case R.id.menu_quit :
-				dialogConfirmExit();
-				return true;
 
 			default :
 				return super.onOptionsItemSelected(item);
 		}
     }
-    
+
     public void selectEffect()
     {
     	final CharSequence[] charseq = mEffectList.getCharSequenceList();
 		new AlertDialog.Builder(activity)
         .setTitle("Choose an effect")
-        .setItems( charseq, new DialogInterface.OnClickListener() 
+        .setItems( charseq, new DialogInterface.OnClickListener()
         {
-            public void onClick(DialogInterface dialog, int which) 
+            public void onClick(DialogInterface dialog, int which)
             {
             	Utility.log( "Selected effect: " + charseq[which].toString() );
             	mPrefs.setEffectFast( charseq[which].toString() );
             	applyRatioAndEffect();
             }
         })
-        .create().show(); 
+        .create().show();
     }
     
     @SuppressWarnings("deprecation")
@@ -429,7 +506,7 @@ public class Main extends Activity implements OnKeyListener
 
 		EffectList.ScreenSize val = EffectList.ScreenSize.values()[mPrefs.getScreenSize()];
 
-		val = EffectList.ScreenSize.EFFECT_FULLSCREEN;		// add_shin
+//		val = EffectList.ScreenSize.EFFECT_FULLSCREEN;		// add_shin
 		switch ( val )
         {
         	case EFFECT_FITSCREEN:
@@ -593,9 +670,7 @@ public class Main extends Activity implements OnKeyListener
 	}
 
 
-	static int menu_pressed = 0;
-
-	final int JOYSTICK_BACK =4;
+//	static int menu_pressed = 0;
 
 	@Override
 	public boolean onKey(View v, int keyCode, KeyEvent event)
@@ -603,25 +678,35 @@ public class Main extends Activity implements OnKeyListener
     	if( this.inputHardwareEdit )
 			return true;
 
-		if ( keyCode == 197 || keyCode == JOYSTICK_BACK ) {
+		final EmuPreferences mPrefs = this.mPrefs;
+
+		if ( keyCode == 47/* 59*/ )		// keysetup.
+		{
+			showInputHardwareDialog();
+//			doMenuScale();;
+//			selectEffect();
+//			doMenuSwitchService();
+			return true;
+		}
+
+
+/*
+		if ( keyCode == 197 || keyCode == mPrefs.getPadStart() ) {
 
 			if (menu_pressed > 6)
 			{
-
-
-
-
 				menu_pressed = 0;
-
-				final EmuPreferences mPrefs = this.mPrefs;
 				keyCode = mPrefs.getPadMenu();
 				return inputHardware.onKey( v, keyCode, event );
 			}
 			menu_pressed++;
 		}
-    	
+*/
+
 ///    	if( !inputView.isShown() && !actionBar.isShowing() )
-    	return inputHardware.onKey( v, keyCode, event );
+		{
+			return inputHardware.onKey(v, keyCode, event);
+		}
 //		return false;
 	}
 
@@ -657,9 +742,24 @@ public class Main extends Activity implements OnKeyListener
 		return super.onKeyUp( keyCode, event );
 	}
 */
+
+	private static boolean isPause = false;
     public boolean handlePauseMenu()
     {
+
  //   	Utility.log( "### actionBar.isShowing: " + actionBar.isShowing() );
+//		if ( isPause )
+//		{
+//			resume();
+//			isPause = false;
+//		}
+//		else {
+//
+//			pause();
+//			isPause = true;
+//		}
+
+
 //    	if( actionBar.isShowing() )
  //   	{
   //  		stateMenu.setVisibility( View.GONE );
@@ -672,8 +772,11 @@ public class Main extends Activity implements OnKeyListener
     //		pause();
     //	}
 
-		dialogConfirmExit();
 		//PopupMenu popup = new PopupMenu(this, button );
+
+
+		 dialogConfirmExit();
+
     	return true;
     }
   
@@ -735,6 +838,9 @@ public class Main extends Activity implements OnKeyListener
 					else
 					{
 						dialog.dismiss();
+
+						inputHardware.keyFill();		// apply change key.
+
 						inputHardwareEdit = false;
 					}
 				}

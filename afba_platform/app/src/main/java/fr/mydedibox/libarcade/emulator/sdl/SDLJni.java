@@ -1,6 +1,6 @@
 package fr.mydedibox.libarcade.emulator.sdl;
 
-import fr.mydedibox.libarcade.emulator.activity.Main;
+import fr.mydedibox.libarcade.emulator.activity.EmulMainActivity;
 import android.content.Context;
 
 public class SDLJni 
@@ -55,7 +55,7 @@ public class SDLJni
     }
     public static Context getContext() 
     {
-    	return Main.surfaceView.getContext();
+    	return EmulMainActivity.surfaceView.getContext();
     }
     public static Object audioInit(int sampleRate, boolean is16Bit, boolean isStereo, int desiredFrames) 
     {
@@ -81,18 +81,18 @@ public class SDLJni
     
     public static void setErrorMessage( String pMessage ) 
     {
-    	Main.setErrorMessage(pMessage);
+        EmulMainActivity.setErrorMessage(pMessage);
     }
     public static void showProgressBar( String pMessage, int pMax ) 
     {
-    	Main.showProgressBar(pMessage, pMax);
+        EmulMainActivity.showProgressBar(pMessage, pMax);
     }
     public static void hideProgressBar() 
     {
-    	Main.hideProgressBar();
+        EmulMainActivity.hideProgressBar();
     }
     public static void setProgressBar ( String pMessage, int pProgress ) 
     {
-    	Main.setProgressBar( pMessage, pProgress );
+        EmulMainActivity.setProgressBar( pMessage, pProgress );
     }
 }

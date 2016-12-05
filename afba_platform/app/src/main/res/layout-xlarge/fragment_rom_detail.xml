@@ -96,6 +96,15 @@
                 android:id="@+id/menu_play_sdl" />
 
 
+            <Button
+                android:text="Setup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/menu_key_setup" />
+
+
+
+
 
         <ScrollView
             android1:id="@+id/romDescription"

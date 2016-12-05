@@ -7,7 +7,7 @@ import com.greatlittleapps.utility.UtilityMessage;
 import com.qn.afba.R;
 
 import fr.mydedibox.libarcade.ArcadeUtility;
-import fr.mydedibox.libarcade.emulator.activity.Main;
+import fr.mydedibox.libarcade.emulator.activity.EmulMainActivity;
 import fr.mydedibox.libarcade.objects.RomInfo;
 import fr.mydedibox.libarcade.preferences.EmuPreferences;
 import android.content.Intent;
@@ -125,7 +125,7 @@ public class romDetailFragment extends Fragment
 	        	bundle.putInt( "buttons", rom.GetButtonCount() );
 	        	bundle.putBoolean( "vertical", rom.GetScreenResolution().isVertical() );
 
-	        	final Intent itent = new Intent( activity, Main.class );
+	        	final Intent itent = new Intent( activity, EmulMainActivity.class );
 	        	//itent.setComponent( new ComponentName( UtilityPackage.AFBA_PACKAGE, UtilityPackage.AFBA_ACTIVITY ) );
 	        	itent.putExtras(bundle);
 	        	startActivity( itent );
@@ -216,7 +216,7 @@ public class romDetailFragment extends Fragment
                         bundle.putInt("buttons", rom.GetButtonCount());
                         bundle.putBoolean("vertical", rom.GetScreenResolution().isVertical());
 
-                        final Intent itent = new Intent(activity, Main.class);
+                        final Intent itent = new Intent(activity, EmulMainActivity.class);
                         //itent.setComponent( new ComponentName( UtilityPackage.AFBA_PACKAGE, UtilityPackage.AFBA_ACTIVITY ) );
                         itent.putExtras(bundle);
                         startActivity(itent);
@@ -225,6 +225,9 @@ public class romDetailFragment extends Fragment
                 }
             }
         });
+
+
+
 
 
         return rootView;

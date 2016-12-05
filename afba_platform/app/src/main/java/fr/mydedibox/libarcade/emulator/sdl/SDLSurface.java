@@ -13,7 +13,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import com.greatlittleapps.utility.Utility;
 
-import fr.mydedibox.libarcade.emulator.activity.Main;
+import fr.mydedibox.libarcade.emulator.activity.EmulMainActivity;
 
 public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback/*, OnKeyListener*/
 {
@@ -49,7 +49,7 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback/*,
     	
     	//getHolder().setType( surfaceViewHolder.surfaceView_TYPE_GPU );
         //Utility.log( "Holder size: " + mScreenHolderSizeX +"x"+ mScreenHolderSizeY );
-    	getHolder().setFixedSize( Main.mScreenHolderSizeX, Main.mScreenHolderSizeY );
+    	getHolder().setFixedSize( EmulMainActivity.mScreenHolderSizeX, EmulMainActivity.mScreenHolderSizeY );
     	getHolder().addCallback(this); 
         setFocusable(true);
         setFocusableInTouchMode(true);
@@ -247,10 +247,10 @@ public class SDLSurface extends SurfaceView implements SurfaceHolder.Callback/*,
     // Java functions called from C
     public static boolean createGLContext(int majorVersion, int minorVersion) 
     {
-        return Main.surfaceView.initEGL(majorVersion, minorVersion);
+        return EmulMainActivity.surfaceView.initEGL(majorVersion, minorVersion);
     }
     public static void flipBuffers() 
     {
-    	Main.surfaceView.flipEGL();
+        EmulMainActivity.surfaceView.flipEGL();
     }
 }

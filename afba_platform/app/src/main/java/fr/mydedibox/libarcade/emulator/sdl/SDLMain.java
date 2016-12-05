@@ -3,7 +3,7 @@ package fr.mydedibox.libarcade.emulator.sdl;
 import android.content.Context;
 import com.greatlittleapps.utility.Utility;
 
-import fr.mydedibox.libarcade.emulator.activity.Main;
+import fr.mydedibox.libarcade.emulator.activity.EmulMainActivity;
 
 public class SDLMain implements Runnable 
 {
@@ -18,7 +18,7 @@ public class SDLMain implements Runnable
 	{
 		Utility.log( "Starting emulator thread" );
 		//Utility.log( Utility.dumpPrefs( ctx ) );
-		SDLJni.nativeInitWithArgs( Main.args );
+		SDLJni.nativeInitWithArgs( EmulMainActivity.args );
 		Utility.log( "emualator thread returned" );
 	}
 }

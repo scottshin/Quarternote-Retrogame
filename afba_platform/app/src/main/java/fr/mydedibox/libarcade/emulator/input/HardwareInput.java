@@ -3,7 +3,7 @@ package fr.mydedibox.libarcade.emulator.input;
 import java.util.Arrays;
 import java.util.List;
 
-import fr.mydedibox.libarcade.emulator.activity.Main;
+import fr.mydedibox.libarcade.emulator.activity.EmulMainActivity;
 import fr.mydedibox.libarcade.emulator.utility.EmuPreferences;
 
 import android.view.KeyEvent;
@@ -11,7 +11,7 @@ import android.view.View;
 
 public class HardwareInput implements IButtons
 {
-	private final Main mActivity;
+	private final EmulMainActivity mActivity;
 	private int pad_data = 0;
 	private int pad_up;
 	private int pad_down;
@@ -28,9 +28,15 @@ public class HardwareInput implements IButtons
 	private int pad_menu;
 	private int pad_exit;
 	
-	public HardwareInput( Main pActivity )
+	public HardwareInput( EmulMainActivity pActivity )
 	{
 		this.mActivity = pActivity;
+
+
+		keyFill();
+	}
+
+	public void keyFill () {
 		final EmuPreferences mPrefs = this.mActivity.mPrefs;
 		pad_up = mPrefs.getPadUp();
 		pad_down = mPrefs.getPadDown();
@@ -46,6 +52,8 @@ public class HardwareInput implements IButtons
 		pad_coins = mPrefs.getPadCoins();
 		pad_menu = mPrefs.getPadMenu();
 		pad_exit = mPrefs.getPadExit();
+
+
 	}
 
 	public boolean onKey( View v, int keyCode, KeyEvent event )
@@ -159,7 +167,7 @@ public class HardwareInput implements IButtons
 			handled = true;
 		}
 
-		Main.setPadData( 0, pad_data );
+		EmulMainActivity.setPadData( 0, pad_data );
 		return handled;
 	}
 
@@ -168,12 +176,12 @@ public class HardwareInput implements IButtons
 		"pad_down",
 		"pad_left",
 		"pad_right",
-		"pad_1",
-		"pad_2",
-		"pad_3",
-		"pad_4",
-		"pad_5",
-		"pad_6",
+		"pad_1(blue)",
+		"pad_2(green)",
+		"pad_3(yellow)",
+		"pad_4(red)",
+		"pad_5(white-left)",
+		"pad_6(white-right)",
 		"pad_start",
 		"pad_coins",
 		"pad_menu"
