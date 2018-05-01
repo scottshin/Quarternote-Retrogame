@@ -72,6 +72,7 @@ static int Init()
 	nUseBlitter = 0;
 	nGameWidth = nVidImageWidth; nGameHeight = nVidImageHeight;
 	nRotateGame = 0;
+    //nVidRotationAdjust = 1; // add_shin
 
 	if (bDrvOkay) {
 		// Get the game screen size

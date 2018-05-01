@@ -571,6 +571,9 @@ public class EmulMainActivity extends Activity implements OnKeyListener
 		surfaceView.setLayoutParams( p );
 		effectView.applyEffect( p, mEffectList.getByName( mPrefs.getEffectFast() ) );
 //		inputView.requestLayout();
+
+
+//		surfaceView.setRotation(90);
     }
     
     public void dialogConfirmExit( )
@@ -877,19 +880,16 @@ public class EmulMainActivity extends Activity implements OnKeyListener
         if ( surfaceView.mSDLThread != null) 
         {
         	Utility.log( "Emulator thread is running, waiting for it to finnish..." );
-            try 
-            {
+            try {
             	surfaceView.mSDLThread.join();
             } 
-            catch(Exception e) 
-            {
+            catch(Exception e) {
             	Utility.loge("Problem stopping thread: " + e);
             }
             surfaceView.mSDLThread = null;
             Utility.log("Finished waiting for emulator thread");
         }
-        else
-        {
+        else {
         	Utility.log( "Emulator thread not running" );
         }
         System.gc();

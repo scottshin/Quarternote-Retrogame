@@ -70,6 +70,7 @@ void Java_fr_mydedibox_libarcade_emulator_sdl_SDLJni_nativeInitWithArgs(JNIEnv* 
 	android_pause = 0;
 	android_quit = 0;
 	android_fskip = 0;
+    //android_rotate = 1;     // add_shin
 
 	status = SDL_main(i+1, (char **)argv);
 }
