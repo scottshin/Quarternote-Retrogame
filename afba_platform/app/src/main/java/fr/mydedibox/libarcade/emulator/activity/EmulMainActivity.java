@@ -571,9 +571,6 @@ public class EmulMainActivity extends Activity implements OnKeyListener
 		surfaceView.setLayoutParams( p );
 		effectView.applyEffect( p, mEffectList.getByName( mPrefs.getEffectFast() ) );
 //		inputView.requestLayout();
-
-
-//		surfaceView.setRotation(90);
     }
     
     public void dialogConfirmExit( )
@@ -659,6 +656,7 @@ public class EmulMainActivity extends Activity implements OnKeyListener
     	SDLJni.setPadData(i, data);
     }
 
+/*
 	@Override
 	public boolean onKeyLongPress( int keyCode, KeyEvent event)
 	{
@@ -671,7 +669,7 @@ public class EmulMainActivity extends Activity implements OnKeyListener
 		return super.onKeyLongPress( keyCode, event );
 
 	}
-
+*/
 
 //	static int menu_pressed = 0;
 
@@ -683,7 +681,7 @@ public class EmulMainActivity extends Activity implements OnKeyListener
 
 		final EmuPreferences mPrefs = this.mPrefs;
 
-		if ( keyCode == 47/* 59*/ )		// keysetup.
+		if ( keyCode == 33 /*47*//* 59*/ )		// keysetup.
 		{
 			showInputHardwareDialog();
 //			doMenuScale();;
@@ -842,7 +840,7 @@ public class EmulMainActivity extends Activity implements OnKeyListener
 					{
 						dialog.dismiss();
 
-						inputHardware.keyFill();		// apply change key.
+						inputHardware.keyFill( mPrefs );		// apply change key.
 
 						inputHardwareEdit = false;
 					}
@@ -880,16 +878,19 @@ public class EmulMainActivity extends Activity implements OnKeyListener
         if ( surfaceView.mSDLThread != null) 
         {
         	Utility.log( "Emulator thread is running, waiting for it to finnish..." );
-            try {
+            try 
+            {
             	surfaceView.mSDLThread.join();
             } 
-            catch(Exception e) {
+            catch(Exception e) 
+            {
             	Utility.loge("Problem stopping thread: " + e);
             }
             surfaceView.mSDLThread = null;
             Utility.log("Finished waiting for emulator thread");
         }
-        else {
+        else
+        {
         	Utility.log( "Emulator thread not running" );
         }
         System.gc();
